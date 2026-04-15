@@ -1,0 +1,9 @@
+{
+  "name": "混合",
+  "id": 190648434760776,
+  "main": "dist/main.js",
+  "ui": "dist/index.html",
+  "editor_type": [
+    "canvas"
+  ]
+}
