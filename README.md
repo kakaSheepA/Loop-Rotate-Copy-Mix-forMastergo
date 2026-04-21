@@ -1,12 +1,8 @@
 # 循环&旋转&复制&混合 for MasterGo
 
 一个面向 MasterGo 画布环境的矢量效率插件，围绕三个高频操作做了整理：
-
-- `循环`
-- `旋转复制`
-- `混合`
-
 目标不是做“大而全”的设计工具，而是把常用的重复、混合、复制类操作收进一个轻量插件里，减少手工重复编辑。
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/814e1d4e-093a-4b84-b2a1-dbc238c702b6" />
 
 ## 功能概览
 
