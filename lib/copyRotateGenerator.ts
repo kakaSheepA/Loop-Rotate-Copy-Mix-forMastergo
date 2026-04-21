@@ -27,6 +27,7 @@ type CopyRotateResult = {
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))
 const degToRad = (value: number) => (value * Math.PI) / 180
+const referenceCopyCount = 8
 
 const controlPointMap: Record<ControlPointKey, { x: number; y: number }> = {
   topLeft: { x: 0, y: 0 },
@@ -60,17 +61,27 @@ const buildPlacement = (
   baseHeight: number,
   baseRotation: number
 ) => {
-  const angle = request.startAngle + request.angleStep * index
-  const radians = degToRad(angle)
+  const angleStep = request.angleStep * (referenceCopyCount / Math.max(1, request.copies))
+  const angle = request.startAngle + angleStep * index
+  const rotation = request.radialAlignCopies ? baseRotation + angle : baseRotation
+  const radians = degToRad(rotation)
   const offset = rotateVector(request.radius, 0, radians)
   const nextAnchorX = orbitCenterX + offset.x
   const nextAnchorY = orbitCenterY + offset.y
+  const anchorVecX = (anchor.x - 0.5) * baseWidth
+  const anchorVecY = (anchor.y - 0.5) * baseHeight
+  const topLeftVecX = -baseWidth / 2
+  const topLeftVecY = -baseHeight / 2
+  const rotatedAnchor = rotateVector(anchorVecX, anchorVecY, radians)
+  const rotatedTopLeft = rotateVector(topLeftVecX, topLeftVecY, radians)
+  const centerX = nextAnchorX - rotatedAnchor.x
+  const centerY = nextAnchorY - rotatedAnchor.y
 
   return {
     angle,
-    x: nextAnchorX - baseWidth * anchor.x,
-    y: nextAnchorY - baseHeight * anchor.y,
-    rotation: request.radialAlignCopies ? baseRotation + angle : baseRotation,
+    x: centerX + rotatedTopLeft.x,
+    y: centerY + rotatedTopLeft.y,
+    rotation,
   }
 }
 

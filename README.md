@@ -1,4 +1,4 @@
-# Loop / Rotate / Copy / Mix for MasterGo
+# 循环&旋转&复制&混合 for MasterGo
 
 一个面向 MasterGo 画布环境的矢量效率插件，围绕三个高频操作做了整理：
 
